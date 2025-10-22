@@ -33,7 +33,9 @@
 <body>
   <header>
     <nav>
-      <a href="/">Home</a>
+      <a href="/Locashare/index.html">Home</a>
+      <span class="muted">/</span>
+      <span class="muted">Policies</span>
       <span class="muted">/</span>
       <strong>Privacy Policy</strong>
     </nav>
