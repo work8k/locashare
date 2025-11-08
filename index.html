@@ -225,12 +225,25 @@
     </a>
   </div>
   
-  <!-- Footer (no second language switcher) -->
+  <!-- Footer (English + Arabic versions, switched by JS) -->
   <footer>
-    <p>&copy; 2025 Dama Code • <a href="/policies/privacy-policy.html" id="privacy-link">Privacy Policy</a></p>
+    <!-- English footer (default) -->
+    <div id="footer-en">
+      <p>&copy; 2025 Dama Code • <a href="/policies/privacy-policy.html" id="privacy-link">Privacy Policy</a></p>
+    </div>
+
+    <!-- Arabic footer (shown only when Arabic is selected) -->
+    <div id="footer-ar" style="display:none;">
+      <p>شركة داما كود لتقنية المعلومات</p>
+      <p>الجبيل - المملكة العربية السعودية</p>
+      <p>رقم توثيق المركز السعودي للأعمال # 0000155228</p>
+      <p>info@damacode.com</p>
+      <p>© 2025 Dama Code For Information Technology - All Rights Reserved</p>
+    </div>
   </footer>
 
   <script>
+    // Translations for tagline and features and screenshot
     const translations = {
       en: {
         tagline: "Share your Address instantly",
@@ -239,7 +252,6 @@
         feature3: "Widgets",
         feature4: "Control Center",
         feature5: "Privacy First",
-        privacyUrl: "/policies/privacy-policy.html",
         screenshot: "assets/app-screenshot.png"
       },
       ar: {
@@ -249,7 +261,6 @@
         feature3: "اختصار الويدجت",
         feature4: "اختصار مركز التحكم",
         feature5: "خصوصية تامة 100٪",
-        privacyUrl: "/policies/privacy-policy-ar.html",
         screenshot: "assets/app-screenshot-ar.png"
       }
     };
@@ -265,7 +276,7 @@
       // Update HTML attributes
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      document.body.style.textAlign = lang === 'ar' ? 'center' : 'center';
+      document.body.style.textAlign = 'center';
       
       // Move switcher based on language and screen size
       const langSwitchers = document.querySelectorAll('.lang-switcher');
@@ -280,7 +291,7 @@
             langSwitcher.style.left = '20px';
           }
         } else {
-          // Mobile: switch sides based on language (now enabled)
+          // Mobile: switch sides based on language
           if (lang === 'ar') {
             langSwitcher.style.left = 'auto';
             langSwitcher.style.right = '10px';
@@ -299,16 +310,25 @@
         }
       });
       
-      // Update privacy policy link
-      const privacyLink = document.getElementById('privacy-link');
-      privacyLink.href = translations[lang].privacyUrl;
-      
       // Update screenshot image
       const screenshot = document.getElementById('app-screenshot');
       screenshot.src = translations[lang].screenshot;
       screenshot.alt = lang === 'ar'
         ? 'لقطة شاشة لتطبيق لوكا شير على الآيفون'
         : 'Loca Share app screenshot on iPhone';
+
+      // Switch footer content based on language
+      const footerEn = document.getElementById('footer-en');
+      const footerAr = document.getElementById('footer-ar');
+      if (footerEn && footerAr) {
+        if (lang === 'ar') {
+          footerEn.style.display = 'none';
+          footerAr.style.display = 'block';
+        } else {
+          footerEn.style.display = 'block';
+          footerAr.style.display = 'none';
+        }
+      }
       
       // Update active button
       document.querySelectorAll('.lang-btn').forEach(btn => {
