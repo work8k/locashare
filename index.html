@@ -19,9 +19,9 @@
     padding: 40px;
   }
 
-  /* Language Switcher (single, used for all breakpoints) */
+  /* Language Switcher */
   .lang-switcher {
-    position: absolute;       /* stays at the corner on desktop & mobile */
+    position: absolute;
     top: 20px;
     left: 20px;
     display: flex;
@@ -32,7 +32,6 @@
     padding: 8px;
     z-index: 1000;
   }
-
   .lang-btn {
     padding: 8px 16px;
     background: transparent;
@@ -43,15 +42,14 @@
     font-size: 0.9em;
     transition: all 0.2s ease;
   }
-
   .lang-btn:hover {
     background: #1a1a1a;
     color: #fff;
   }
-
   .lang-btn.active {
-    background: #a855f7;
-    color: #fff;
+    /* No special background color for the active language */
+    background: transparent;
+    text-decoration: underline; /* Just underline to indicate selection */
   }
 
   /* Hero Section */
@@ -153,7 +151,7 @@
     p.tagline { font-size:1em; margin-bottom:30px; }
     .app-card { padding: 40px 30px; }
 
-    /* Make buttons a bit smaller on mobile, but keep switcher at top-left */
+    /* Make buttons smaller on mobile, but keep switcher in top-left corner */
     .lang-btn {
       padding: 3px 8px;
       font-size: 0.7em;
@@ -161,7 +159,7 @@
     }
     .lang-btn.active {
       background: transparent;
-      color: #fff;
+      text-decoration: underline;
     }
     .lang-btn:hover {
       background: #1a1a1a;
@@ -213,12 +211,9 @@
     </a>
   </div>
   
-  <!-- Footer (no extra language switcher here anymore) -->
+  <!-- Footer (no second language switcher) -->
   <footer>
-    <p>
-      &copy; 2025 Dama Code •
-      <a href="/policies/privacy-policy.html" id="privacy-link">Privacy Policy</a>
-    </p>
+    <p>&copy; 2025 Dama Code • <a href="/policies/privacy-policy.html" id="privacy-link">Privacy Policy</a></p>
   </footer>
 
   <script>
@@ -256,9 +251,9 @@
       // Update HTML attributes
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      document.body.style.textAlign = 'center'; // layout stays centered
+      document.body.style.textAlign = lang === 'ar' ? 'center' : 'center';
       
-      // Update lang switcher position for RTL (desktop only)
+      // Keep original effect: move switcher left/right on desktop only
       const langSwitchers = document.querySelectorAll('.lang-switcher');
       langSwitchers.forEach(langSwitcher => {
         if (window.innerWidth > 768) {
@@ -270,9 +265,9 @@
             langSwitcher.style.left = '20px';
           }
         } else {
-          // On mobile always keep it on the left corner
-          langSwitcher.style.left = '20px';
+          // On mobile, always keep it in the top-left corner
           langSwitcher.style.right = 'auto';
+          langSwitcher.style.left = '20px';
         }
       });
       
@@ -295,7 +290,7 @@
         ? 'لقطة شاشة لتطبيق لوكا شير على الآيفون'
         : 'Loca Share app screenshot on iPhone';
       
-      // Update active button for all switchers
+      // Update active button
       document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.remove('active');
         if (btn.getAttribute('data-lang') === lang) {
@@ -315,7 +310,7 @@
       });
     });
 
-    // Also re-apply position on resize so desktop/mobile switch behaves nicely
+    // Re-apply positioning on resize to keep desktop/mobile behavior correct
     window.addEventListener('resize', () => {
       applyLanguage(currentLang);
     });
