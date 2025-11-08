@@ -141,23 +141,42 @@
     h1 { font-size:2.5em; }
     p.tagline { font-size:1em; margin-bottom:30px; }
     .app-card { padding: 40px 30px; }
+    
+    /* Move language switcher to footer on mobile */
     .lang-switcher {
-      top: 10px;
-      right: 10px;
-      padding: 4px;
-      gap: 4px;
-      border-radius: 8px;
+      position: static;
+      margin-top: 20px;
+      padding: 3px;
+      gap: 3px;
+      border-radius: 6px;
+      background: transparent;
+      border: 1px solid #333;
     }
     .lang-btn {
-      padding: 4px 8px;
-      font-size: 0.75em;
-      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 0.7em;
+      border-radius: 4px;
+    }
+    .lang-btn.active {
+      background: transparent;
+      color: #fff;
+    }
+    .lang-btn:hover {
+      background: #1a1a1a;
+    }
+    
+    footer {
+      margin-top: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
     }
   }
 </style>
 </head>
 <body>
-  <!-- Language Switcher -->
+  <!-- Language Switcher (Desktop) -->
   <div class="lang-switcher">
     <button class="lang-btn active" data-lang="en">English</button>
     <button class="lang-btn" data-lang="ar">العربية</button>
@@ -184,7 +203,13 @@
   
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 Dama Code • <a href="/policies/privacy-policy.html" id="privacy-link">Privacy Policy</a>
+    <p>&copy; 2025 Dama Code • <a href="/policies/privacy-policy.html" id="privacy-link">Privacy Policy</a></p>
+    
+    <!-- Language Switcher (Mobile - in footer) -->
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">English</button>
+      <button class="lang-btn" data-lang="ar">العربية</button>
+    </div>
   </footer>
 
   <script>
@@ -224,15 +249,19 @@
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
       document.body.style.textAlign = lang === 'ar' ? 'center' : 'center';
       
-      // Update lang switcher position for RTL
-      const langSwitcher = document.querySelector('.lang-switcher');
-      if (lang === 'ar') {
-        langSwitcher.style.right = 'auto';
-        langSwitcher.style.left = '20px';
-      } else {
-        langSwitcher.style.left = 'auto';
-        langSwitcher.style.right = '20px';
-      }
+      // Update lang switcher position for RTL (desktop only)
+      const langSwitchers = document.querySelectorAll('.lang-switcher');
+      langSwitchers.forEach(langSwitcher => {
+        if (window.innerWidth > 768) {
+          if (lang === 'ar') {
+            langSwitcher.style.right = 'auto';
+            langSwitcher.style.left = '20px';
+          } else {
+            langSwitcher.style.left = 'auto';
+            langSwitcher.style.right = '20px';
+          }
+        }
+      });
       
       // Update all translated elements
       document.querySelectorAll('[data-translate]').forEach(element => {
@@ -251,7 +280,7 @@
       screenshot.src = translations[lang].screenshot;
       screenshot.alt = lang === 'ar' ? 'لقطة شاشة لتطبيق لوكا شير على الآيفون' : 'Loca Share app screenshot on iPhone';
       
-      // Update active button
+      // Update active button for all switchers
       document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.remove('active');
         if (btn.getAttribute('data-lang') === lang) {
