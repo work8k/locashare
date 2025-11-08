@@ -28,9 +28,60 @@
   .muted { color: #9ca3af; }
   .divider { height:1px; background:#222; margin: 24px 0; }
   nav { display:flex; gap:16px; align-items:center; }
+
+  /* Language Switcher */
+  .lang-switcher {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    padding: 8px;
+    z-index: 1000;
+  }
+  .lang-btn {
+    padding: 8px 16px;
+    background: transparent;
+    color: #9ca3af;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.2s ease;
+  }
+  .lang-btn:hover {
+    background: #1a1a1a;
+    color: #fff;
+  }
+  .lang-btn.active {
+    background: transparent;
+    text-decoration: underline;
+  }
+
+  @media (max-width:768px){
+    .lang-switcher {
+      top: 10px;
+      right: 10px;
+      padding: 6px;
+    }
+    .lang-btn {
+      padding: 3px 8px;
+      font-size: 0.7em;
+      border-radius: 4px;
+    }
+  }
 </style>
 </head>
 <body>
+  <!-- Language Switcher -->
+  <div class="lang-switcher">
+    <button class="lang-btn active" data-lang="en">English</button>
+    <button class="lang-btn" data-lang="ar">العربية</button>
+  </div>
+
   <header>
     <nav>
       <a href="/index.html">Home</a>
@@ -40,10 +91,8 @@
       <strong>Privacy Policy</strong>
     </nav>
   </header>
-
   <main>
     <h1>Privacy Policy</h1>
-
     <h2>Total Privacy — We Never Access Your Data</h2>
     <p>
       Your data is created on your device and is under your control. We do <strong>not</strong> upload your data to our servers at all.
@@ -51,29 +100,23 @@
     <p>
       <strong>We Do Not collect your personal data.</strong> The app can works entirely offline and locally on your device.
     </p>
-
     <h2>Backup</h2>
     <p>
-      You can back up your data using Apple’s iCloud Backup. This is managed entirely by Apple and follows Apple’s privacy policies.
+      You can back up your data using Apple's iCloud Backup. This is managed entirely by Apple and follows Apple's privacy policies.
     </p>
-
     <h2>How Sharing Works</h2>
     <p>
       When you enter an address or location in Loca Share and tap <strong>Share</strong>, iOS opens the system <strong>Share Sheet</strong>. You then choose the destination app (for example, WhatsApp, Messages, Mail, or others).
     </p>
     <ul>
       <li>The content you choose to share is copied to the app you selected, under your direction.</li>
-      <li>Loca Share does not transmit or store this content on our servers. The sending happens inside the chosen app and is governed by that app’s privacy policy.</li>
+      <li>Loca Share does not transmit or store this content on our servers. The sending happens inside the chosen app and is governed by that app's privacy policy.</li>
       <li>You decide what to share and with whom.</li>
     </ul>
-
-
     <h2>Updates</h2>
     <p>
       We may update this privacy policy at any time. Your rights will not be reduced without your clear consent. Any changes will be posted on this page. Please check regularly to stay informed.
     </p>
-
-
     <h2>Contact</h2>
     <p>
       If you have questions or concerns, contact us:
@@ -84,14 +127,25 @@
       E-mail: <a href="mailto:info@damacode.com">info@damacode.com</a><br/>
       Saudi Business Center Authentication Number # 0000155228
     </p>
-
-
     <div class="divider"></div>
     <p class="muted">Date of Last Update: <span>October 15, 2025</span></p>
   </main>
-
   <footer>
     <p class="muted">© 2025, Dama Code For Information Technology Company</p>
   </footer>
+
+  <script>
+    // Language switching functionality
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        if (lang === 'ar') {
+          // Redirect to Arabic privacy policy
+          window.location.href = '/policies/privacy-policy-ar.html';
+        }
+        // If already on English, no need to do anything
+      });
+    });
+  </script>
 </body>
 </html>
