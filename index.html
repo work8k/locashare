@@ -6,6 +6,7 @@
 <title>Loca Share</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background: #0a0a0a;
@@ -16,22 +17,37 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 40px;
+
+    /* Top padding removed so the switcher can sit at the very top */
+    padding: 0 40px 40px;
+    position: relative; /* So the switcher is positioned relative to the body */
+  }
+
+  /* Wrapper for main content: adds space BELOW the switcher */
+  .page-inner {
+    width: 100%;
+    max-width: 900px;
+
+    /* This creates the gap between the switcher and the header */
+    padding-top: 80px;
   }
 
   /* Language Switcher */
   .lang-switcher {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 0;           /* Stick to the very top of the page */
+    left: 0;          /* Default; JS will move it left/right based on language */
     display: flex;
     gap: 8px;
     background: transparent;
     border: none;
     border-radius: 12px;
-    padding: 8px;
+
+    /* A bit of internal padding so it doesn’t touch the very corner visually */
+    padding: 8px 8px 12px 8px;
     z-index: 1000;
   }
+
   .lang-btn {
     padding: 8px 16px;
     background: transparent;
@@ -151,7 +167,7 @@
     p.tagline { font-size:1em; margin-bottom:30px; }
     .app-card { padding: 40px 30px; }
 
-    /* Make buttons smaller on mobile, but keep switcher in top-left corner */
+    /* Make buttons smaller on mobile, but keep switcher neat at the top */
     .lang-btn {
       padding: 3px 8px;
       font-size: 0.7em;
@@ -182,39 +198,42 @@
     <button class="lang-btn" data-lang="ar">العربية</button>
   </div>
 
-  <!-- Hero -->
-  <h1><span class="highlight">Loca Share</span></h1>
-  <p class="tagline" data-translate="tagline">Share your Address instantly</p>
-  <div class="features-line" aria-label="Loca Share features">
-    <span data-translate="feature1">One-tap Address Share</span>
-    <span data-translate="feature2">Upload Photos</span>
-    <span data-translate="feature3">Widgets</span>
-    <span data-translate="feature4">Control Center</span>
-    <span data-translate="feature5">Privacy First</span>
-  </div>
+  <!-- Main content wrapped to control spacing below the switcher -->
+  <div class="page-inner">
+    <!-- Hero -->
+    <h1><span class="highlight">Loca Share</span></h1>
+    <p class="tagline" data-translate="tagline">Share your Address instantly</p>
+    <div class="features-line" aria-label="Loca Share features">
+      <span data-translate="feature1">One-tap Address Share</span>
+      <span data-translate="feature2">Upload Photos</span>
+      <span data-translate="feature3">Widgets</span>
+      <span data-translate="feature4">Control Center</span>
+      <span data-translate="feature5">Privacy First</span>
+    </div>
 
-  <!-- App Screenshot -->
-  <img
-    id="app-screenshot"
-    class="app-screenshot"
-    src="assets/app-screenshot.png"
-    alt="Loca Share app screenshot on iPhone"
-  />
+    <!-- App Screenshot -->
+    <img
+      id="app-screenshot"
+      class="app-screenshot"
+      src="assets/app-screenshot.png"
+      alt="Loca Share app screenshot on iPhone"
+    />
 
-  <!-- App Store Button -->
-  <div class="app-store-btn">
-    <a href="https://apps.apple.com/app/apple-store/id6737015574">
-      <img
-        src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-        alt="Download on the App Store"
-      >
-    </a>
+    <!-- App Store Button -->
+    <div class="app-store-btn">
+      <a href="https://apps.apple.com/app/apple-store/id6737015574">
+        <img
+          src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+          alt="Download on the App Store"
+        >
+      </a>
+    </div>
+    
+    <!-- Footer (no second language switcher) -->
+    <footer>
+      <p>&copy; 2025 Dama Code • <a href="/policies/privacy-policy.html" id="privacy-link">Privacy Policy</a></p>
+    </footer>
   </div>
-  
-  <!-- Footer (no second language switcher) -->
-  <footer>
-    <p>&copy; 2025 Dama Code • <a href="/policies/privacy-policy.html" id="privacy-link">Privacy Policy</a></p>
-  </footer>
 
   <script>
     const translations = {
@@ -251,7 +270,7 @@
       // Update HTML attributes
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      document.body.style.textAlign = lang === 'ar' ? 'center' : 'center';
+      document.body.style.textAlign = 'center';
       
       // Keep original effect: move switcher left/right on desktop only
       const langSwitchers = document.querySelectorAll('.lang-switcher');
