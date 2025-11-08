@@ -114,6 +114,7 @@
     border-radius: 24px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     border: 1px solid #333;
+    transition: opacity 0.3s ease;
   }
   /* App Store Button */
   .app-store-btn {
@@ -166,7 +167,7 @@
     <span data-translate="feature5">Privacy First</span>
   </div>
   <!-- App Card -->
-  <img class="app-screenshot" src="assets/app-screenshot.png" alt="Loca Share app screenshot on iPhone" />
+  <img id="app-screenshot" class="app-screenshot" src="assets/app-screenshot.png" alt="Loca Share app screenshot on iPhone" />
   <!-- App Store Button -->
   <div class="app-store-btn">
     <a href="https://apps.apple.com/app/apple-store/id6737015574">
@@ -188,7 +189,8 @@
         feature3: "Widgets",
         feature4: "Control Center",
         feature5: "Privacy First",
-        privacyUrl: "/policies/privacy-policy.html"
+        privacyUrl: "/policies/privacy-policy.html",
+        screenshot: "assets/app-screenshot.png"
       },
       ar: {
         tagline: "شارك عنوانك فورًا",
@@ -197,7 +199,8 @@
         feature3: "الودجات",
         feature4: "مركز التحكم",
         feature5: "الخصوصية أولاً",
-        privacyUrl: "/policies/privacy-policy-ar.html"
+        privacyUrl: "/policies/privacy-policy-ar.html",
+        screenshot: "assets/app-screenshot-ar.png"
       }
     };
 
@@ -236,6 +239,11 @@
       const privacyLink = document.getElementById('privacy-link');
       privacyLink.href = translations[lang].privacyUrl;
       
+      // Update screenshot image
+      const screenshot = document.getElementById('app-screenshot');
+      screenshot.src = translations[lang].screenshot;
+      screenshot.alt = lang === 'ar' ? 'لقطة شاشة لتطبيق لوكا شير على الآيفون' : 'Loca Share app screenshot on iPhone';
+      
       // Update active button
       document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.remove('active');
@@ -258,4 +266,3 @@
   </script>
 </body>
 </html>
-
