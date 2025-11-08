@@ -5,24 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Loca Share</title>
 <style>
+  /* Reset */
   * { margin:0; padding:0; box-sizing:border-box; }
+
+  /* Page layout */
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background: #0a0a0a;
     color: #fff;
     min-height: 100vh;
+
+    /* Center main content vertically/horizontally */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     text-align: center;
     padding: 40px;
+    position: relative; /* needed for absolute elements like the lang switcher */
   }
-  /* Language Switcher */
+
+  /* Language Switcher — single instance, pinned top-left on all screen sizes */
   .lang-switcher {
     position: absolute;
     top: 20px;
-    left: 20px;
+    left: 20px;     /* keep left for both EN/AR as requested */
     display: flex;
     gap: 8px;
     background: transparent;
@@ -41,15 +49,10 @@
     font-size: 0.9em;
     transition: all 0.2s ease;
   }
-  .lang-btn:hover {
-    background: #1a1a1a;
-    color: #fff;
-  }
-  .lang-btn.active {
-    background: #a855f7;
-    color: #fff;
-  }
-  /* Hero Section */
+  .lang-btn:hover { background: #1a1a1a; color: #fff; }
+  .lang-btn.active { background: #a855f7; color: #fff; }
+
+  /* Hero */
   h1 {
     font-size: 3.5em;
     font-weight: 700;
@@ -65,7 +68,8 @@
     color: #9ca3af;
     margin-bottom: 18px;
   }
-  /* Simple Features Line */
+
+  /* Features line */
   .features-line {
     display: flex;
     flex-wrap: wrap;
@@ -75,38 +79,9 @@
     color: #cbd5e1;
     font-size: 0.98em;
   }
-  .features-line .sep {
-    opacity: 0.35;
-  }
-  /* App Card */
-  .app-card {
-    display: inline-block;
-    background: #111;
-    border: 1px solid #333;
-    border-radius: 24px;
-    padding: 60px 40px;
-    text-decoration: none;
-    color: #fff;
-    transition: all 0.3s ease;
-  }
-  .app-card:hover {
-    transform: translateY(-5px);
-    border-color: #a855f7;
-    background: #1a1a1a;
-  }
-  .app-card .app-icon {
-    font-size: 3em;
-    margin-bottom: 20px;
-  }
-  .app-card h2 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-  }
-  .app-card p {
-    color: #9ca3af;
-    font-size: 1em;
-  }
-  /* Screenshot Image */
+  .features-line .sep { opacity: 0.35; }
+
+  /* App screenshot */
   .app-screenshot {
     width: 100%;
     max-width: 420px;
@@ -115,14 +90,14 @@
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     transition: opacity 0.3s ease;
   }
+
   /* App Store Button */
   .app-store-btn {
     margin-top: 60px;
     display: inline-block;
   }
-  .app-store-btn img {
-    height: 50px;
-  }
+  .app-store-btn img { height: 50px; }
+
   /* Footer */
   footer {
     margin-top: 100px;
@@ -134,95 +109,86 @@
     text-decoration: none;
     margin: 0 5px;
   }
-  footer a:hover {
-    text-decoration: underline;
-  }
+  footer a:hover { text-decoration: underline; }
+
+  /* Mobile tweaks */
   @media (max-width:768px){
     h1 { font-size:2.5em; }
     p.tagline { font-size:1em; margin-bottom:30px; }
-    .app-card { padding: 40px 30px; }
-    
-    /* Move language switcher to footer on mobile */
+
+    /* Keep switcher pinned top-left on mobile; just make it smaller */
     .lang-switcher {
-      position: static;
-      margin-top: 20px;
-      padding: 3px;
-      gap: 3px;
-      border-radius: 6px;
-      background: transparent;
-      border: none;
+      top: 14px;
+      left: 14px;
+      padding: 4px;
+      gap: 4px;
+      border-radius: 8px;
     }
     .lang-btn {
-      padding: 3px 8px;
-      font-size: 0.7em;
-      border-radius: 4px;
+      padding: 4px 10px;
+      font-size: 0.8em;
+      border-radius: 6px;
     }
-    .lang-btn.active {
-      background: transparent;
-      color: #fff;
-    }
-    .lang-btn:hover {
-      background: #1a1a1a;
-    }
-    
+
     footer {
       margin-top: 60px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
+      display: block; /* keep footer simple and not centering the switcher (which is no longer inside) */
     }
   }
 </style>
 </head>
 <body>
-  <!-- Language Switcher (Desktop) -->
-  <div class="lang-switcher">
-    <button class="lang-btn active" data-lang="en">English</button>
-    <button class="lang-btn" data-lang="ar">العربية</button>
+  <!-- Language Switcher (single instance) -->
+  <div class="lang-switcher" id="lang-switcher">
+    <button class="lang-btn" data-lang="en" id="btn-en">English</button>
+    <button class="lang-btn" data-lang="ar" id="btn-ar">العربية</button>
   </div>
 
   <!-- Hero -->
   <h1><span class="highlight">Loca Share</span></h1>
   <p class="tagline" data-translate="tagline">Share your Address instantly</p>
+
   <div class="features-line" aria-label="Loca Share features">
-    <span data-translate="feature1">One‑tap Address Share</span>
+    <span data-translate="feature1">One-tap Address Share</span>
+    <span class="sep">•</span>
     <span data-translate="feature2">Upload Photos</span>
+    <span class="sep">•</span>
     <span data-translate="feature3">Widgets</span>
+    <span class="sep">•</span>
     <span data-translate="feature4">Control Center</span>
+    <span class="sep">•</span>
     <span data-translate="feature5">Privacy First</span>
   </div>
-  <!-- App Card -->
+
+  <!-- App Screenshot -->
   <img id="app-screenshot" class="app-screenshot" src="assets/app-screenshot.png" alt="Loca Share app screenshot on iPhone" />
+
   <!-- App Store Button -->
   <div class="app-store-btn">
     <a href="https://apps.apple.com/app/apple-store/id6737015574">
       <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
     </a>
   </div>
-  
+
   <!-- Footer -->
   <footer>
     <p>&copy; 2025 Dama Code • <a href="/policies/privacy-policy.html" id="privacy-link">Privacy Policy</a></p>
-    
-    <!-- Language Switcher (Mobile - in footer) -->
-    <div class="lang-switcher">
-      <button class="lang-btn active" data-lang="en">English</button>
-      <button class="lang-btn" data-lang="ar">العربية</button>
-    </div>
   </footer>
 
   <script>
+    // Translations
     const translations = {
       en: {
         tagline: "Share your Address instantly",
-        feature1: "One‑tap Address Share",
+        feature1: "One-tap Address Share",
         feature2: "Upload Photos",
         feature3: "Widgets",
         feature4: "Control Center",
         feature5: "Privacy First",
         privacyUrl: "/policies/privacy-policy.html",
-        screenshot: "assets/app-screenshot.png"
+        screenshot: "assets/app-screenshot.png",
+        screenshotAlt: "Loca Share app screenshot on iPhone",
+        dir: "ltr"
       },
       ar: {
         tagline: "شارك عنوانك فورًا",
@@ -232,73 +198,55 @@
         feature4: "اختصار مركز التحكم",
         feature5: "خصوصية تامة 100٪",
         privacyUrl: "/policies/privacy-policy-ar.html",
-        screenshot: "assets/app-screenshot-ar.png"
+        screenshot: "assets/app-screenshot-ar.png",
+        screenshotAlt: "لقطة شاشة لتطبيق لوكا شير على الآيفون",
+        dir: "rtl"
       }
     };
 
     // Get saved language or default to English
     let currentLang = localStorage.getItem('language') || 'en';
 
-    // Apply language on page load
+    // Apply language (keeps switcher at top-left regardless of language)
     function applyLanguage(lang) {
       currentLang = lang;
       localStorage.setItem('language', lang);
-      
+
+      const dict = translations[lang];
+
       // Update HTML attributes
       document.documentElement.lang = lang;
-      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      document.body.style.textAlign = lang === 'ar' ? 'center' : 'center';
-      
-      // Update lang switcher position for RTL (desktop only)
-      const langSwitchers = document.querySelectorAll('.lang-switcher');
-      langSwitchers.forEach(langSwitcher => {
-        if (window.innerWidth > 768) {
-          if (lang === 'ar') {
-            langSwitcher.style.left = 'auto';
-            langSwitcher.style.right = '20px';
-          } else {
-            langSwitcher.style.right = 'auto';
-            langSwitcher.style.left = '20px';
-          }
-        }
+      document.documentElement.dir = dict.dir;
+
+      // Update translated text
+      document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        if (dict[key]) el.textContent = dict[key];
       });
-      
-      // Update all translated elements
-      document.querySelectorAll('[data-translate]').forEach(element => {
-        const key = element.getAttribute('data-translate');
-        if (translations[lang][key]) {
-          element.textContent = translations[lang][key];
-        }
-      });
-      
+
       // Update privacy policy link
       const privacyLink = document.getElementById('privacy-link');
-      privacyLink.href = translations[lang].privacyUrl;
-      
-      // Update screenshot image
+      if (privacyLink) privacyLink.href = dict.privacyUrl;
+
+      // Update screenshot
       const screenshot = document.getElementById('app-screenshot');
-      screenshot.src = translations[lang].screenshot;
-      screenshot.alt = lang === 'ar' ? 'لقطة شاشة لتطبيق لوكا شير على الآيفون' : 'Loca Share app screenshot on iPhone';
-      
-      // Update active button for all switchers
+      if (screenshot) {
+        screenshot.src = dict.screenshot;
+        screenshot.alt = dict.screenshotAlt;
+      }
+
+      // Update active button
       document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.getAttribute('data-lang') === lang) {
-          btn.classList.add('active');
-        }
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
       });
     }
 
-    // Initialize language on page load
+    // Initialize
     applyLanguage(currentLang);
 
-    // Add click handlers to language buttons
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const lang = btn.getAttribute('data-lang');
-        applyLanguage(lang);
-      });
-    });
+    // Click handlers
+    document.getElementById('btn-en').addEventListener('click', () => applyLanguage('en'));
+    document.getElementById('btn-ar').addEventListener('click', () => applyLanguage('ar'));
   </script>
 </body>
 </html>
