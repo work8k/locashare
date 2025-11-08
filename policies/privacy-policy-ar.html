@@ -16,15 +16,16 @@
     direction: rtl;
     text-align: right;
   }
+  
   /* Language Switcher */
   .lang-switcher {
-    position: fixed;
+    position: absolute;
     top: 20px;
     left: 20px;
     display: flex;
     gap: 8px;
-    background: #111;
-    border: 1px solid #333;
+    background: transparent;
+    border: none;
     border-radius: 12px;
     padding: 8px;
     z-index: 1000;
@@ -44,9 +45,10 @@
     color: #fff;
   }
   .lang-btn.active {
-    background: #a855f7;
-    color: #fff;
+    background: transparent;
+    text-decoration: underline;
   }
+
   header, footer { padding: 24px; }
   main { width: 100%; max-width: 900px; margin: 0 auto; padding: 32px 24px 64px; }
   a { color: #9ca3af; text-decoration: none; }
@@ -61,10 +63,17 @@
   .muted { color: #9ca3af; }
   .divider { height:1px; background:#222; margin: 24px 0; }
   nav { display:flex; gap:16px; align-items:center; }
+  
   @media (max-width:768px){
     .lang-switcher {
       top: 10px;
       left: 10px;
+      padding: 6px;
+    }
+    .lang-btn {
+      padding: 3px 8px;
+      font-size: 0.7em;
+      border-radius: 4px;
     }
   }
 </style>
@@ -72,8 +81,8 @@
 <body>
   <!-- Language Switcher -->
   <div class="lang-switcher">
-    <button class="lang-btn" onclick="window.location.href='/policies/privacy-policy.html'">English</button>
-    <button class="lang-btn active" onclick="window.location.href='/policies/privacy-policy-ar.html'">العربية</button>
+    <button class="lang-btn" data-lang="en">English</button>
+    <button class="lang-btn active" data-lang="ar">العربية</button>
   </div>
 
   <header>
@@ -130,5 +139,19 @@
   <footer>
     <p class="muted">© 2025, Dama Code For Information Technology Company</p>
   </footer>
+
+  <script>
+    // Language switching functionality
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        if (lang === 'en') {
+          // Redirect to English privacy policy
+          window.location.href = '/policies/privacy-policy.html';
+        }
+        // If already on Arabic, no need to do anything
+      });
+    });
+  </script>
 </body>
 </html>
