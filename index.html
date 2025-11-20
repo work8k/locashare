@@ -68,19 +68,10 @@
     color: #9ca3af;
     margin-bottom: 18px;
   }
-
-  /* Simple Features Line */
-  .features-line {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px 14px;
-    margin: 0 0 40px 0;
-    color: #cbd5e1;
-    font-size: 0.98em;
-  }
-  .features-line .sep {
-    opacity: 0.35;
+  .download-label {
+    margin-top: 40px;
+    font-size: 1em;
+    color: #d1d5db;
   }
 
   /* App Card */
@@ -212,21 +203,8 @@
   <!-- Hero -->
   <h1><span class="highlight">Loca Share</span></h1>
   <p class="tagline" data-translate="tagline">Share your Address instantly</p>
-  <div class="features-line" aria-label="Loca Share features">
-    <span data-translate="feature1">One-tap Address Share</span>
-    <span data-translate="feature2">Upload Photos</span>
-    <span data-translate="feature3">Widgets</span>
-    <span data-translate="feature4">Control Center</span>
-    <span data-translate="feature5">Privacy First</span>
-  </div>
 
-  <!-- App Screenshot -->
-  <img
-    id="app-screenshot"
-    class="app-screenshot"
-    src="assets/app-screenshot.png"
-    alt="Loca Share app screenshot on iPhone"
-  />
+  <p class="download-label" data-translate="downloadLabel">Download the app from here</p>
 
   <!-- App Store Button -->
   <div class="app-store-btn">
@@ -237,6 +215,14 @@
       >
     </a>
   </div>
+  
+  <!-- App Screenshot -->
+  <img
+    id="app-screenshot"
+    class="app-screenshot"
+    src="assets/app-screenshot.png"
+    alt="Loca Share app screenshot on iPhone"
+  />
   
 <!-- Footer (English + Arabic versions, switched by JS) -->
   <footer>
@@ -272,25 +258,17 @@
   </script>
 
   <script>
-    // Translations for tagline and features and screenshot
+    // Translations for tagline and screenshot
     const translations = {
       en: {
         tagline: "Share your Address instantly",
-        feature1: "One-tap Address Share",
-        feature2: "Upload Photos",
-        feature3: "Widgets",
-        feature4: "Control Center",
-        feature5: "Privacy First",
-        screenshot: "assets/app-screenshot.png"
+        screenshot: "assets/app-screenshot.png",
+        downloadLabel: "Download the app from here"
       },
       ar: {
-        tagline: "شارك عنوانك فورًا",
-        feature1: "مشاركة العنوان بلمسة واحدة",
-        feature2: "مع صور الموقع",
-        feature3: "اختصار الويدجت",
-        feature4: "اختصار مركز التحكم",
-        feature5: "خصوصية تامة 100٪",
-        screenshot: "assets/app-screenshot-ar.png"
+        tagline: "شارك العنوان بشكل سهل وسريع",
+        screenshot: "assets/app-screenshot-ar.png",
+        downloadLabel: "قم بتنزيل التطبيق من هنا"
       }
     };
 
